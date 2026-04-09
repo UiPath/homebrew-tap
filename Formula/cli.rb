@@ -12,30 +12,8 @@ class Cli < Formula
   end
 
   def post_uninstall
-    system "npm", "uninstall", "-g", "@uipath/cli"
-
-    # Remove auto-installed plugin tools
-    uipath_tools = %w[
-      @uipath/solution-tool
-      @uipath/agent-tool
-      @uipath/codedagent-tool
-      @uipath/codedapp-tool
-      @uipath/integrationservice-tool
-      @uipath/orchestrator-tool
-      @uipath/rpa-tool
-      @uipath/flow-tool
-      @uipath/case-tool
-      @uipath/test-manager-tool
-      @uipath/resource-tool
-      @uipath/api-workflow-tool
-      @uipath/maestro-tool
-      @uipath/docsai-tool
-      @uipath/vertical-solutions-tool
-      @uipath/traces-tool
-    ]
-    uipath_tools.each do |tool|
-      system "npm", "uninstall", "-g", tool
-    end
+    uipath_dir = "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath"
+    rm_rf uipath_dir if Dir.exist?(uipath_dir)
   end
 
   test do
