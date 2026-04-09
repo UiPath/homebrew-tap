@@ -8,6 +8,7 @@ class Uip < Formula
 
   def install
     system "npm", "install", "-g", "@uipath/cli@#{version}"
+    (prefix/"RELEASE").write "@uipath/cli@#{version}\n"
   end
 
   def post_uninstall
