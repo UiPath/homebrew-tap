@@ -12,8 +12,12 @@ class Cli < Formula
   end
 
   def post_uninstall
+    system "npm", "uninstall", "-g", "@uipath/cli"
+
     uipath_dir = "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath"
-    rm_rf uipath_dir if Dir.exist?(uipath_dir)
+    if Dir.exist?(uipath_dir)
+      Dir.glob("#{uipath_dir}/*-tool").each { |d| rm_rf d }
+    end
   end
 
   test do
