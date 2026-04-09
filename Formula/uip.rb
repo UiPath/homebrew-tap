@@ -12,12 +12,13 @@ class Uip < Formula
   end
 
   def post_uninstall
-    system "npm", "uninstall", "-g", "@uipath/cli"
-
     uipath_dir = "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath"
     if Dir.exist?(uipath_dir)
-      Dir.glob("#{uipath_dir}/*-tool").each { |d| rm_rf d }
+      rm_rf uipath_dir
     end
+
+    uip_bin = "#{HOMEBREW_PREFIX}/bin/uip"
+    rm_f uip_bin if File.exist?(uip_bin)
   end
 
   test do
