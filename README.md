@@ -1,29 +1,28 @@
 # UiPath Homebrew Tap
 
-Homebrew tap for UiPath CLI.
+Homebrew tap for [UiPath CLI](https://github.com/UiPath/cli).
 
 ## Install
 
 ```bash
-brew install uipath/cli
+brew install uipath/cli/uip
+```
+
+Or with explicit tap:
+
+```bash
+brew tap uipath/cli
+brew install uip
 ```
 
 ## Upgrade
 
 ```bash
-brew upgrade cli
+brew upgrade uip
 ```
 
 ## Uninstall
 
 ```bash
-brew uninstall cli
+brew uninstall uip
 ```
-
-## What's included
-
-| Formula | Binary | Description |
-|---------|--------|-------------|
-| `cli` | `uip` | UiPath CLI for automation lifecycle management |
-
-Plugin tools (e.g. `solution`, `flow`, `rpa`) are auto-installed on first use and removed on `brew uninstall cli`.

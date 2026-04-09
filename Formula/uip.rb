@@ -1,4 +1,4 @@
-class Cli < Formula
+class Uip < Formula
   desc "UiPath CLI for automation lifecycle management"
   homepage "https://github.com/UiPath/cli"
   url "https://registry.npmjs.org/@uipath/cli/-/cli-0.1.21.tgz"
@@ -7,8 +7,7 @@ class Cli < Formula
   depends_on "node"
 
   def install
-    system "npm", "install", "-g", "."
-    bin.install Dir["#{HOMEBREW_PREFIX}/bin/uip"]
+    system "npm", "install", "-g", "@uipath/cli@#{version}"
   end
 
   def post_uninstall
