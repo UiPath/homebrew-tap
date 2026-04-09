@@ -5,7 +5,7 @@ Homebrew tap for [UiPath CLI](https://github.com/UiPath/cli).
 ## Install
 
 ```bash
-brew install uipath/uip/uip
+brew install uipath/uip
 ```
 
 Or with explicit tap:
