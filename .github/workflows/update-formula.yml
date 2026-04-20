@@ -52,8 +52,8 @@ jobs:
       - uses: peter-evans/create-pull-request@v6
         if: steps.vars.outputs.skip != 'true'
         with:
-          commit-message: "uip ${{ steps.vars.outputs.version }}"
-          title: "uip ${{ steps.vars.outputs.version }}"
+          commit-message: "bump uip version to ${{ steps.vars.outputs.version }}"
+          title: "bump uip version to ${{ steps.vars.outputs.version }}"
           body: |
             Automated bump: `@uipath/cli` on npm is now `${{ steps.vars.outputs.version }}`.
 
