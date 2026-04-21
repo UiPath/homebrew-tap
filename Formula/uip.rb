@@ -8,18 +8,39 @@ class Uip < Formula
   depends_on "node"
 
   def install
-    system "npm", "install", "-g", "@uipath/cli@#{version}"
-    (prefix/"RELEASE").write "@uipath/cli@#{version}\n"
+    system "npm", "install", *std_npm_args
+
+    # Expose the CLI at HOMEBREW_PREFIX/lib/node_modules/@uipath/cli so the
+    # plugin resolver finds plugins (installed there by `uip install <tool>`).
+    (lib/"node_modules/@uipath").mkpath
+    ln_s libexec/"lib/node_modules/@uipath/cli",
+         lib/"node_modules/@uipath/cli"
+
+    # --preserve-symlinks-main keeps import.meta.url at the HOMEBREW_PREFIX
+    # path instead of realpath'ing into the keg.
+    (bin/"uip").write <<~SH
+      #!/bin/bash
+      exec "#{Formula["node"].opt_bin}/node" --preserve-symlinks-main \\
+        "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath/cli/dist/index.js" "$@"
+    SH
+    chmod 0755, bin/"uip"
   end
 
-  def post_uninstall
-    uipath_dir = "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath"
-    if Dir.exist?(uipath_dir)
-      rm_rf uipath_dir
-    end
+  def caveats
+    <<~EOS
+      Plugins installed via `uip install <tool>` live in:
+        #{HOMEBREW_PREFIX}/lib/node_modules/@uipath/
 
-    uip_bin = "#{HOMEBREW_PREFIX}/bin/uip"
-    rm_f uip_bin if File.exist?(uip_bin)
+      They persist across `brew upgrade uip` so your plugin state is preserved.
+
+      Before `brew uninstall uip`, remove them with either:
+
+        uip uninstall <tool>                                    # per-tool via the CLI
+        rm -rf "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath"    # everything at once
+
+      Run these BEFORE `brew uninstall`; once the CLI is gone, `uip uninstall`
+      is gone too.
+    EOS
   end
 
   test do
