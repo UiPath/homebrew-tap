@@ -28,18 +28,16 @@ class Uip < Formula
 
   def caveats
     <<~EOS
-      Plugins installed via `uip install <tool>` live in:
+      Plugins installed via `uip tools install <tool>` live in:
         #{HOMEBREW_PREFIX}/lib/node_modules/@uipath/
 
       They persist across `brew upgrade uip` so your plugin state is preserved.
 
-      Before `brew uninstall uip`, remove them with either:
+      Remove a specific plugin (uip keeps working):
+        uip tools uninstall <tool>
 
-        uip uninstall <tool>                                    # per-tool via the CLI
-        rm -rf "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath"    # everything at once
-
-      Run these BEFORE `brew uninstall`; once the CLI is gone, `uip uninstall`
-      is gone too.
+      Fully uninstall uip and all plugins:
+        rm -rf "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath" && brew uninstall uip
     EOS
   end
 
