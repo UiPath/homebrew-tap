@@ -17,9 +17,12 @@ class Uip < Formula
          lib/"node_modules/@uipath/cli"
 
     # --preserve-symlinks-main keeps import.meta.url at the HOMEBREW_PREFIX
-    # path instead of realpath'ing into the keg.
+    # path instead of realpath'ing into the keg. Prepending node's opt bin
+    # to PATH pins npm too, so `uip tools install` always targets brew's
+    # prefix regardless of nvm/volta/system npm on the user's PATH.
     (bin/"uip").write <<~SH
       #!/bin/bash
+      export PATH="#{Formula["node"].opt_bin}:$PATH"
       exec "#{Formula["node"].opt_bin}/node" --preserve-symlinks-main \\
         "#{HOMEBREW_PREFIX}/lib/node_modules/@uipath/cli/dist/index.js" "$@"
     SH
