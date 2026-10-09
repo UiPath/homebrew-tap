@@ -1,9 +1,9 @@
 class Uip < Formula
   desc "UiPath CLI for automation lifecycle management"
   homepage "https://www.npmjs.com/package/@uipath/cli"
-  version "1.202.0"
+  version "1.203.0"
   url "https://registry.npmjs.org/@uipath/cli/-/cli-#{version}.tgz"
-  sha256 "2f8adc986f4468885b718e20df531d5552f1279a91a0a3b87c74b0b8064561a8"
+  sha256 "bca132dac20bc911666b8429598b2d410f6b6b2eed58ef5e99167d25469501a2"
 
   depends_on "node"
 
